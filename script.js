@@ -27,22 +27,11 @@ function displayLibrary() {
   myLibrary.forEach((book) => {
     let div = document.createElement('div');
     div.setAttribute('class', 'book');
+    div.innerHTML = `<p>Title: ${book.title}</p>
+    <p>Author: ${book.author}</p>
+    <p>Pages: ${book.pages} pages</p>
+    <p>Read status: ${book.read}</p>`;
     library.appendChild(div);
-
-    let title = document.createElement('p');
-    let author = document.createElement('p');
-    let pages = document.createElement('p');
-    let read = document.createElement('p');
-
-    title.innerHTML = `Title: ${book.title}`;
-    author.innerHTML = `Author: ${book.author}`;
-    pages.innerHTML = `Pages: ${book.pages}`;
-    read.innerHTML = `Read status: ${book.read}`;
-
-    div.appendChild(title);
-    div.appendChild(author);
-    div.appendChild(pages);
-    div.appendChild(read);
   })
 }
 
