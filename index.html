@@ -15,14 +15,20 @@
         <div class="library">
         </div>
         <dialog>
-            <form action="">
-                <input type="text" placeholder="name">
-                <input type="text" placeholder="author">
-                <input type="text" placeholder="pages">
-                <input type="checkbox">
-                <label for="status">Have you read it?</label>
-                <button>Add book</button>
-            </form>
+            <div class="modal-content">
+                <form action="">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name"><br><br>
+                    <label for="author">Author:</label>
+                    <input type="text" name="author" id="author"><br><br>
+                    <label for="pages">Pages:</label>
+                    <input type="text" name="pages" id="pages"><br><br>
+                    <input type="checkbox" id="status">
+                    <label for="status">Have you read it?</label><br><br>
+                    <button>Cancel</button>
+                    <button>Add book</button>
+                </form>
+            </div>
         </dialog>
     </main>
 </body>
