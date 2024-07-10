@@ -17,6 +17,13 @@ myLibrary.push(theHobbit);
 myLibrary.push(mobyDick);
 myLibrary.push(mockingbird);
 
+const dialog = document.querySelector('dialog');
+const dialogBtn = document.getElementById('dialogBtn');
+
+dialogBtn.addEventListener('click', () => {
+  dialog.showModal();
+})
+
 function addBookToLibrary() {
   // do stuff here
 }
