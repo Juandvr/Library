@@ -35,7 +35,7 @@ button:hover {
     grid-auto-flow: row;
     grid-template-columns: repeat(3, auto);
     grid-template-rows: repeat(3, auto);
-    grid-gap: 6px 20px;
+    grid-gap: 15px 20px;
 }
 
 .book {
@@ -45,6 +45,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
 }
 
 dialog {
@@ -61,11 +62,19 @@ dialog {
     padding: 2rem;
   }
 
-  .modal-content {
+.modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 20%;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+  }
+
+.read {
+    background-color: #269c0e;
+  }
+
+.unread {
+    background-color: rgb(198, 18, 18);
   }

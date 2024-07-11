@@ -9,9 +9,9 @@ function Book(title, author, pages, read) {
   this.info = () => `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
 }
 
-const theHobbit = new Book('The Hobbit', 'Tolkien', 95, 'not read');
-const mobyDick = new Book('Moby Dick', 'Herman Melville', 635, 'not read');
-const mockingbird = new Book('To kill a mockingbird', 'Harper Lee', 384, 'not read');
+const theHobbit = new Book('The Hobbit', 'Tolkien', 95, 'unread');
+const mobyDick = new Book('Moby Dick', 'Herman Melville', 635, 'unread');
+const mockingbird = new Book('To kill a mockingbird', 'Harper Lee', 384, 'unread');
 
 myLibrary.push(theHobbit);
 myLibrary.push(mobyDick);
@@ -36,12 +36,11 @@ add.addEventListener('click', () => {
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
   let status = document.getElementById('status').checked;
-  status = status === true ? 'read' : 'not read';
+  status = status === true ? 'read' : 'unread';
 
   let newBook = new Book(name, author, pages, status);
   myLibrary.push(newBook);
 
-  console.log(name, author, pages, status);
   displayLibrary();
 });
 
@@ -55,10 +54,26 @@ function displayLibrary() {
     div.setAttribute('class', 'book');
     div.innerHTML = `<p>Title: ${book.title}</p>
     <p>Author: ${book.author}</p>
-    <p>Pages: ${book.pages} pages</p>
-    <p>Read status: ${book.read}</p>`;
+    <p>Pages: ${book.pages}</p>
+    <button class="bookstatus ${book.read}">${book.read}</button>`;
     library.appendChild(div);
   })
 }
 
 window.onload = displayLibrary();
+
+const bookstatus = document.querySelectorAll('.bookstatus');
+
+bookstatus.forEach((books) => {
+  books.addEventListener('click', () => {
+    if (books.innerText === 'read') {
+      books.classList.add('unread');
+      books.classList.remove('read');
+      books.innerText = 'unread';
+    } else {
+      books.classList.add('read');
+      books.classList.remove('unread');
+      books.innerText = 'read';
+    }
+  })
+})
