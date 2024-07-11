@@ -26,6 +26,7 @@ button {
 button:hover {
     background-color: white;
     color: rgb(74, 100, 230);
+    cursor: pointer;
 }
 
 .library {

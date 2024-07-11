@@ -19,17 +19,36 @@ myLibrary.push(mockingbird);
 
 const dialog = document.querySelector('dialog');
 const dialogBtn = document.getElementById('dialogBtn');
+const cancel = document.getElementById('cancel');
+const add = document.getElementById('add');
 
 dialogBtn.addEventListener('click', () => {
   dialog.showModal();
 })
 
-function addBookToLibrary() {
-  // do stuff here
-}
+cancel.addEventListener('click', (e) => {
+  e.preventDefault();
+  dialog.close();
+})
+
+add.addEventListener('click', () => {
+  const name = document.getElementById('name').value;
+  const author = document.getElementById('author').value;
+  const pages = document.getElementById('pages').value;
+  let status = document.getElementById('status').checked;
+  status = status === true ? 'read' : 'not read';
+
+  let newBook = new Book(name, author, pages, status);
+  myLibrary.push(newBook);
+
+  console.log(name, author, pages, status);
+  displayLibrary();
+});
 
 function displayLibrary() {
   const library = document.querySelector('.library');
+
+  library.innerHTML = '';
 
   myLibrary.forEach((book) => {
     let div = document.createElement('div');
