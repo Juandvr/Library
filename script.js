@@ -1,9 +1,11 @@
 const myLibrary = [];
+const collections = [];
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, collection) {
   this.title = title;
   this.author = author;
   this.pages = pages;
+  this.collection = collection || 'All';
   this.read = read;
 
   this.info = () => `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
@@ -26,26 +28,38 @@ dialogBtn.addEventListener('click', () => {
   dialog.showModal();
 })
 
+dialog.addEventListener('mousedown', (e) => {
+  if (e.target === dialog) {
+    dialog.close();
+  }
+})
+
 cancel.addEventListener('click', (e) => {
   e.preventDefault();
   dialog.close();
 })
 
 add.addEventListener('click', () => {
-  const name = document.getElementById('name').value;
-  const author = document.getElementById('author').value;
-  const pages = document.getElementById('pages').value;
-  let status = document.getElementById('status').checked;
-  status = status === true ? 'read' : 'unread';
+  const title = document.getElementById('title');
+  const author = document.getElementById('author');
+  const pages = document.getElementById('pages');
+  let status = document.getElementById('status');
+  const collection = document.getElementById('collectionList').value;
+  status = status.checked === true ? 'read' : 'unread';
 
-  let newBook = new Book(name, author, pages, status);
+  let newBook = new Book(title.value, author.value, pages.value, status, collection);
   myLibrary.push(newBook);
+
+  title.value = '';
+  author.value = '';
+  pages.value = '';
+  status.checked = false;
 
   displayLibrary();
 });
 
 function displayLibrary() {
-  const library = document.querySelector('.library');
+  const library = document.getElementById('library');
 
   library.innerHTML = '';
 
@@ -56,24 +70,83 @@ function displayLibrary() {
     <p>Author: ${book.author}</p>
     <p>Pages: ${book.pages}</p>
     <button class="bookstatus ${book.read}">${book.read}</button>`;
+    const button = div.querySelector('.bookstatus');
+    button.addEventListener('click', () => {
+      if (book.read === 'read') {
+        book.read = 'unread';
+      } else {
+        book.read = 'read';
+      }
+    });
     library.appendChild(div);
   })
 }
 
-window.onload = displayLibrary();
+window.addEventListener('load', () => {
+  displayLibrary();
+  displayCollections();
+  displayCollectionList();
+});
 
-const bookstatus = document.querySelectorAll('.bookstatus');
+const collectionsDiv = document.getElementById('collections');
+const newCollection = document.getElementById('newCollection');
+const addCollection = document.getElementById('addCollection');
+const collectionList = document.getElementById('collectionList');
 
-bookstatus.forEach((books) => {
-  books.addEventListener('click', () => {
-    if (books.innerText === 'read') {
-      books.classList.add('unread');
-      books.classList.remove('read');
-      books.innerText = 'unread';
-    } else {
-      books.classList.add('read');
-      books.classList.remove('unread');
-      books.innerText = 'read';
-    }
-  })
-})
+addCollection.addEventListener('click', () => {
+  const collectionName = newCollection.value.trim();
+  if (collectionName && !collections.includes(collectionName)) {
+    collections.push(collectionName);
+    displayCollections();
+    displayCollectionList();
+    newCollection.value = '';
+  }
+});
+
+function displayCollections() {
+  collectionsDiv.innerHTML = '';
+  collections.forEach((collection) => {
+    const collectionDiv = document.createElement('div');
+    collectionDiv.textContent = collection;
+    collectionDiv.classList.add('collection');
+    collectionDiv.addEventListener('click', () => {
+      const filteredBooks = myLibrary.filter(book => book.collection === collection);
+      const library = document.getElementById('library');
+      library.innerHTML = '';
+      filteredBooks.forEach((book) => {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'book');
+        div.innerHTML = `<p>Title: ${book.title}</p>
+        <p>Author: ${book.author}</p>
+        <p>Pages: ${book.pages}</p>
+        <button class="bookstatus ${book.read}">${book.read}</button>`;
+        const button = div.querySelector('.bookstatus');
+        button.addEventListener('click', () => {
+          if (book.read === 'read') {
+            book.read = 'unread';
+          } else {
+            book.read = 'read';
+          }
+      });
+        library.appendChild(div);
+      });
+    });
+    collectionsDiv.appendChild(collectionDiv);
+  });
+}
+
+function displayCollectionList() {
+  collectionList.innerHTML = '';
+  collections.forEach((collection) => {
+    const option = document.createElement('option');
+    option.value = collection;
+    option.textContent = collection;
+    collectionList.appendChild(option);
+  });
+}
+
+const allCollections = document.getElementById('allCollections');
+
+allCollections.addEventListener('click', () => {
+  displayLibrary();
+});

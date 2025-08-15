@@ -12,11 +12,14 @@
     </header>
     <main>
         <div class="side-panel">
+            <h2>Collections</h2>
+            <input type="new-collection" placeholder="New collection" id="newCollection">
+            <button id="addCollection">+ Add collection</button>
+            <div class="collection" id="allCollections">All</div>
             <div id="collections">
-                <h2>Collections</h2>
             </div>
         </div>
-        <button id="dialogBtn">+</button>
+        <button id="dialogBtn">+ Add book</button>
         <div id="library">
         </div>
         <dialog>
@@ -25,6 +28,9 @@
                     <input type="text" placeholder="Title" name="title" id="title"><br><br>
                     <input type="text" placeholder="Author" name="author" id="author"><br><br>
                     <input type="text" placeholder="Pages" name="pages" id="pages"><br><br>
+                    <label for="collection">Select a collection:</label><br><br>
+                    <select id="collectionList" name="collection">
+                    </select><br><br>
                     <input type="checkbox" id="status" name="status" value="read">
                     <label for="status">Have you read it?</label><br><br>
                     <button id="cancel">Cancel</button>
